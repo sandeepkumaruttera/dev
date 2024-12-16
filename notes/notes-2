@@ -1,172 +1,279 @@
-useradd Vish-->addin user
-userdel vish-->deleting user 
-id vish--> to check primary and secondary groups 
-In Linux when you create user ,by default a group will be created with th same username
+
+ps -ef --> all process in Linux
 
 
-adding groups 
-groupadd devops-->command-->primary group
-groupadd testing--->secondary group
-usermod -g devops vish----->adding vish to devops group as a primary group
-usermod -aG testing vish -->adding vish to testing group as a secondary group 
-gpasswd -d vish testing---->deleting vish user from testing group 
+foreground and background
+------------------------------
+foreground process blocks the terminal until its completes 
 
-[root@ip-172-31-86-219 home]# id vish
-uid=1001(vish) gid=1002(devops) groups=1002(devops),1003(testing)
+ex: sleep 200
 
-devops---> primary 
-testing --> secondary
+background
+----------
 
-when employee is leaving ?
+"&" will take the process in to the background
+ex: sleep 200 &
 
-remove all his secondary groups--->example:gpasswd -d vish testing
-change primary group to his own group--->example:usermod -g vish vish
-then delete the user--> example:userdel vish
+-----------------------------------------------------------------------
 
------------------------------------------------------------------------------------------------------------------
-example live:
-
-[root@ip-172-31-86-219 home]# useradd sandeep
-[root@ip-172-31-86-219 home]# id sandeep
-uid=1002(sandeep) gid=1002(sandeep) groups=1002(sandeep)
-[root@ip-172-31-86-219 home]# getent group
-root:x:0:
-bin:x:1:
-daemon:x:2:
-sys:x:3:
-adm:x:4:ec2-user
-tty:x:5:
-disk:x:6:
-lp:x:7:
-mem:x:8:
-kmem:x:9:
-wheel:x:10:ec2-user
-cdrom:x:11:
-mail:x:12:postfix
-man:x:15:
-dialout:x:18:
-floppy:x:19:
-games:x:20:
-tape:x:33:
-video:x:39:
-ftp:x:50:
-lock:x:54:
-audio:x:63:
-nobody:x:99:
-users:x:100:
-utmp:x:22:
-utempter:x:35:
-input:x:999:
-systemd-journal:x:190:ec2-user
-systemd-network:x:192:
-dbus:x:81:
-ssh_keys:x:998:
-rpc:x:32:
-libstoragemgmt:x:997:
-sshd:x:74:
-rngd:x:996:
-rpcuser:x:29:
-nfsnobody:x:65534:
-ec2-instance-connect:x:995:
-slocate:x:21:
-postdrop:x:90:
-postfix:x:89:
-chrony:x:994:
-stapusr:x:156:
-stapsys:x:157:
-stapdev:x:158:
-screen:x:84:
-tcpdump:x:72:
-ec2-user:x:1000:
-vish:x:1001:
-sandeep:x:1002:
-[root@ip-172-31-86-219 home]# groupadd devops
-[root@ip-172-31-86-219 home]# groupadd testing
-[root@ip-172-31-86-219 home]# usermod -g devops sandeep
-[root@ip-172-31-86-219 home]# usermod -aG testing sandeep
-[root@ip-172-31-86-219 home]# id sandeep
-uid=1002(sandeep) gid=1003(devops) groups=1003(devops),1004(testing)
-[root@ip-172-31-86-219 home]# gpasswd -d sandeep testing  --------------->deleting first secondary group 
-Removing user sandeep from group testing
-[root@ip-172-31-86-219 home]# id sandeep
-uid=1002(sandeep) gid=1003(devops) groups=1003(devops)
-[root@ip-172-31-86-219 home]# usermod -g sandeep Sandeep -------------->change primary group to secondary group 
-[root@ip-172-31-86-219 home]# id sandeep
-uid=1002(sandeep) gid=1002(sandeep) groups=1002(sandeep)
-[root@ip-172-31-86-219 home]#userdel Sandeep
-
------------------------------------------------------------------------------------------------------------------
-if a new user have to login with his private key?
-
-swathi --->useradd swathi
- cd /home/swathi/----------->need to create directory mkdir .ssh--->.ssh file should have 700 permission
-inside .ssh need to create a file -->touch authorized_keys---> must have 600 permission-----> whatever presnt in ec2-user/.ssh just copy that in to swathi user that it you can use same private key without creating new
+ps -ef | grep sleep ---> to check sleep procees running or not
+ps -ef | grep sleep | grep -v grep -----> it will remove grep one
 
 
-* in that authorized_keys file we need to fill the public key whatever we generated (or) whatever presnt in ec2-user/.ssh just copy that in to swathi user that it you can use same private key without creating new
+[swathi@ip-172-31-17-109 ~]$ sleep 200 &
+[1] 2632
+[swathi@ip-172-31-17-109 ~]$ ps -ef | grep sleep
+swathi      2632    2301  0 04:06 pts/0    00:00:00 sleep 200
+swathi      2634    2301  0 04:06 pts/0    00:00:00 grep --color=auto sleep
+[swathi@ip-172-31-17-109 ~]$ ps -ef | grep sleep | grep -v grep
+swathi      2632    2301  0 04:06 pts/0    00:00:00 sleep 200
+[swathi@ip-172-31-17-109 ~]$ kill -9 2632
+[1]+  Killed                  sleep 200
+[swathi@ip-172-31-17-109 ~]$ ps -ef | grep sleep | grep -v grep
+
+
+------------------------------------------------------------------
+
+kill the existing process, and restart the service....
+
+kill vs kill -9
+
+kill -> request to end --> graceful termination
+kill -9 --> order to end --> forceful termination
+
+top --> all running process with CPU and RAM
+
+Network management
+------------------
+How to check a port is opened or not in linux
+netstat -ltnp --> listdown the tcp opened ports and their PID
+
+------------------------------------------------------------------
+
+
+username and password 
+----------------------
+
+AMI-->amazon machine image ----->Red hat-->devops-pratice--->us-east-1region
+
+ec2-user--->username
+DevOps321--->password
+
+use AMI you will get all packages
+
+-------------------------------------------------------------------
+
+
+RDBMS----> relational database management system table and column based data
 
 
 
-**when u trying to login with swathi if it shown password means you need to change the ownership to swathi in the .ssh directory---> cd /home/swathi/.ssh 
- 
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
-after that changing ownership
-chown <user>:<group> .ssh---> chown swathi:swathi .ssh
+mysql--->db 
+ first thing we need to use this commands
 
+# MySQL
 
-------------------------------------------------------------------------------------------------------------------
-giving sudo acces to swathi 
-**vim   /etc/sudoers in that file edited lines shown on th below with example ** marks
+Developer has chosen the database MySQL. Hence, we are trying to install it up and configure it.
 
+**Versions of the DB Software you will get context from the developer, Meaning we need to check with developer.**
 
--------
+Install MySQL Server 8.0.x
 
-Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+```
+dnf install mysql-server -y
+```
 
-## Next comes the main part: which users can run what software on
-## which machines (the sudoers file can be shared between multiple
-## systems).
-## Syntax:
-##
-##      user    MACHINE=COMMANDS
-##
-## The COMMANDS section may have other options added to it.
-##
-## Allow root to run any commands anywhere
-root    ALL=(ALL)       ALL
+Start MySQL Service
 
-## Allows members of the 'sys' group to run networking, software,
-## service management apps and more.
-# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+```
+systemctl enable mysqld
+```
+```
+systemctl start mysqld
+```
 
-## Allows people in group wheel to run all commands
-%wheel  ALL=(ALL)       ALL
+Next, We need to change the default root password in order to start using the database service. Use password ExpenseApp@1 or any other as per your choice.
 
-## Same thing without a password
- wheel ALL=(ALL)       NOPASSWD: ALL    ------------------>we need to uncommand this line 
+```
+mysql_secure_installation --set-root-pass Chintu@123
+```
+That's all
 
-## Allows members of the users group to mount and unmount the
-## cdrom as root
-# %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
+----------------------------------------------------------------------------------------------------
 
-## Allows members of the users group to shutdown this system
-# %users  localhost=/sbin/shutdown -h now
+after that checking MySQL running or not use this below commands
+
+systemctl status mysqld --> to check the status
 
 
-after that we need to adding secondary group "wheel" to username 
-
-usermod -aG wheel swathi
 
 
-then login with swathi and and also u will have sudo su access also ... 
 
------------------------------------------------------------
-HTML --> Text Format
-CSS --> Colors, fonts
-JS --> Validations..
+[ root@ip-172-31-24-24 /home/ec2-user/.ssh ]# netstat -lntp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1219/sshd: /usr/sbi
+tcp6       0      0 :::33060                :::*                    LISTEN      14066/mysqld
+tcp6       0      0 :::22                   :::*                    LISTEN      1219/sshd: /usr/sbi
+tcp6       0      0 :::3306                 :::*                    LISTEN      14066/mysqld
 
 
-Web/Frontend tier --> LB,HTML, CSS, JS, Angular Js, reactjs, etc, nodejs --> Nginx/Apache servers --> http servers
-API/APP/Backend tier --> Java, .NET,Python, pHp, etc. --> Jboss/weblogic/websphere --> inbuilt servers like tomcat
-DB tier --> MySQL,MSSQL, Oracle, etc. --> MongoDB, Mysql, Kafka, redis
 
+mysql--->3306 run in this port
+
+
+[ root@ip-172-31-24-24 /home/ec2-user/.ssh ]# ps -ef | grep mysql
+mysql      14066       1  0 05:01 ?        00:00:01 /usr/libexec/mysqld --basedi                                                                                                             r=/usr
+root       14130    1358  0 05:04 pts/0    00:00:00 grep --color=auto mysql
+
+
+54.221.146.241 | 172.31.24.24 | t2.micro | null
+[ root@ip-172-31-24-24 /home/ec2-user/.ssh ]# mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.36 Source distribution
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------
+
+### Backend
+Backend service is responsible for adding the given values to database. Backend service is written in NodeJS, Hence we need to install NodeJS.
+
+**Developer has chosen NodeJs, Check with developer which version of NodeJS is needed. Developer has set a context that it can work with NodeJS >20**
+
+Install NodeJS, By default NodeJS 16 is available, We would like to enable 20 version and install this.
+
+**You can list modules by using dnf module list**
+
+we nee dot check "dnf module list" which node we are 
+
+```
+dnf module disable nodejs -y
+```
+```
+dnf module enable nodejs:20 -y
+```
+
+```
+dnf install nodejs -y
+```
+
+Configure the application.
+
+Add application User
+```
+useradd expense
+```
+
+User expense is a function / daemon user to run the application. Apart from that we don't use this user to login to server.
+
+Also, username expense has been picked because it more suits to our project name.
+
+We keep application in one standard location. This is a usual practice that runs in the organization.
+
+Lets setup an app directory.
+
+```
+mkdir /app
+```
+
+Download the application code to created app directory.
+
+```
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+```
+```
+cd /app
+```
+```
+unzip /tmp/backend.zip
+```
+
+Every application is developed by development team will have some common softwares that they use as libraries. This application also have the same way of defined dependencies in the application configuration.
+
+Lets download the dependencies.
+
+```
+cd /app
+```
+```
+npm install
+```
+
+We need to setup a new service in systemd so systemctl can manage this service
+
+Setup SystemD Expense Backend Service
+```
+vim /etc/systemd/system/backend.service
+```
+
+```
+[Unit]
+Description = Backend Service
+
+[Service]
+User=expense
+Environment=DB_HOST="<MYSQL-SERVER-IPADDRESS>"
+ExecStart=/bin/node /app/index.js
+SyslogIdentifier=backend
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**NOTE: Ensure you replace <MYSQL-SERVER-IPADDRESS> with IP address** need to give private ip address
+
+Load the service.
+
+```
+systemctl daemon-reload
+```
+
+Start the service.
+```
+systemctl start backend
+```
+```
+systemctl enable backend
+```
+
+For this application to work fully functional we need to load schema to the Database.
+
+We need to load the schema. To load schema we need to install mysql client.
+
+To have it installed we can use
+
+```
+dnf install mysql -y
+```
+
+Load Schema
+
+```
+mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+```
+
+Restart the service.
+```
+systemctl restart backend
