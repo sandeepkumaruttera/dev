@@ -76,6 +76,10 @@ after unzip all files at /app --> then use npm install command at /app --->it wi
 
 https://github.com/daws-78s/shell-script/blob/main/readme.MD
 
+IF U USE THIS COMMAND GITBASH WILL NEVER ASK TOKENS
+
+git config --global credential.helper store
+
 
 
 
