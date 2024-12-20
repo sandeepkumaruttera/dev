@@ -31,18 +31,45 @@ else
     echo "you are in superuser"
 fi
 
+
+
 for i in $@
 do
-    echo "package to install :$i"
+    echo "package to install: $i"
     dnf list installed $i &>>$LOGFILE
     if [ $? -eq 0 ]
     then
-        echo "package is already installed :$i ... skipping"
-    else 
+        echo -e "$i already installed...$Y SKIPPING $N"
+    else
         dnf install $i -y &>>$LOGFILE
-        VALIDATE  &?   "installing $i"       #validate $1 "validate $?" $2 "is installing $i"
+        VALIDATE $? "Installation of $i"
     fi
 done
+
+
+
+
+
+
+
+
+
+
+
+
+
+#for i in $@
+#do
+ #   echo "package to install :$i"
+#    dnf list installed $i &>>$LOGFILE
+#    if [ $? -eq 0 ]
+ #   then
+#        echo "package is already installed :$i ... skipping"
+ #   else 
+  #      dnf install $i -y &>>$LOGFILE
+   #     VALIDATE  &?   "installing $i"       #validate $1 "validate $?" $2 "is installing $i"
+    #fi
+#done
 
 
 #how to check in linux is command exit status ;
