@@ -1,21 +1,21 @@
 #!/bin/bash
 
-USERID=$(id -u)
+userid=$(id -u)
 
-if [ $USERID -ne 0 ]
+if[ $userid -ne 0 ]
 then
-    echo "Please run this script with root access."
-    exit 1 # manually exit if error comes.
+    echo "you are not in superuser"
+    exit 1
 else
-    echo "You are super user."
+    echo "you are in superuser"
 fi
 
 dnf install mysql -y
 
 if [ $? -ne 0 ]
 then
-    echo "Installation of mysql...FAILURE"
+    echo "installtion is failure"
     exit 1
 else
-    echo "Installation of mysql...SUCCESS"
+    echo "installtion is succes"
 fi
