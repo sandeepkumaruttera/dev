@@ -9,3 +9,13 @@ then
     else 
     echo "you are in superuser"
 fi
+
+dnf install mysql -y
+
+if [ $? -ne 0 ]
+then
+    echo "installtion is failure"
+    exit 1
+    else
+    echo "installtion is succes"
+fi
