@@ -4,10 +4,10 @@ userid=$(id -u)
 
 VLAIDATE(){
     if [ $1 -ne 0 ]
-then
+    then
     echo " $2 is ....failure"
     exit 1
-else
+    else
     echo "$2 is .... success"
 fi
 
@@ -25,8 +25,8 @@ fi
 
 dnf install mysql -y
 
-VALIDATE $? "INSTALLING MYSQL"
+VALIDATE $?  "INSTALLING MYSQL"
 
 dnf install git -y
 
-VALIDATE $? "INSTALLING GIT"
+VALIDATE $?  "INSTALLING GIT"
