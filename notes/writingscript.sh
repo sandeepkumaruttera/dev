@@ -15,13 +15,12 @@ N="\e[0m"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-    echo "$2 is ..failure"
-    exit 1
+        echo "$2 is ..failure"
+        exit 1
     else
-    echo "$2 is ..success"
-fi
+        echo "$2 is ..success"
+    fi
     
-
 }
 
 if [ $userid -ne 0 ]
@@ -42,7 +41,7 @@ do
   else 
       dnf install $i -y &>>LOGFILE
       VALIDATE &? "installing $i"       #validate $1 "validate $?" $2 "is installing $i"
-   fi
+  fi
 done
 
 
