@@ -6,7 +6,7 @@ if[ $userid -ne 0 ]
 then
     echo "you are not in superuser "
     exit 1
-    else 
+else 
     echo "you are in superuser"
 fi
 
@@ -16,6 +16,6 @@ if [ $? -ne 0 ]
 then
     echo "installtion is failure"
     exit 1
-    else
+else
     echo "installtion is succes"
 fi
