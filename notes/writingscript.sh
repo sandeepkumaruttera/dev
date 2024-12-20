@@ -11,7 +11,6 @@ VALIDATE(){
     echo "$2 is .... success"
 fi
 
-
 }
 
 
@@ -23,10 +22,16 @@ else
     echo "print you are  in superuser"
 fi         
 
-dnf install mysql -y 
+for i in $@
+do
+  echo "installing packages $i"
+  dnf list installing $i
+  if [ $? -eq 0 ]
+then  
+    echo "packages are already installed : $i"
+    exit 1
+else
+    dnf install $i -y
+    VALIDATE $? "installing $i"
+fi
 
-VALIDATE $? "installing mysql"  #validate=$1 is it exit status,installing mysql=$2  #$1 is not equal to 0 means exit status is not equal to zero 
-
-dnf install git -y 
-
-VALIDATE $? "installing git"
