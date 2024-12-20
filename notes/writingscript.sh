@@ -33,15 +33,15 @@ fi
 
 for i in $@
 do
-  echo "package to install :$i"
-  dnf list installed $i &>>LOGFILE
-  if [ $? -eq 0 ]
-  then
-      echo "package is already installed :$i ... skipping"
-  else 
-      dnf install $i -y &>>LOGFILE
-      VALIDATE &? "installing $i"       #validate $1 "validate $?" $2 "is installing $i"
-  fi
+    echo "package to install :$i"
+    dnf list installed $i &>>LOGFILE
+    if [ $? -eq 0 ]
+    then
+        echo "package is already installed :$i ... skipping"
+    else 
+        dnf install $i -y &>>LOGFILE
+        VALIDATE  &?   "installing $i"       #validate $1 "validate $?" $2 "is installing $i"
+    fi
 done
 
 
