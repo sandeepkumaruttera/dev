@@ -27,11 +27,10 @@ do
   echo "installing packages $i"
   dnf list installing $i
   if [ $? -eq 0 ]
-then  
+  then  
     echo "packages are already installed : $i"
-    exit 1
 else
     dnf install $i -y
     VALIDATE $? "installing $i"
 fi
-
+done
