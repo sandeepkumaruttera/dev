@@ -2,7 +2,7 @@
 
 userid=$(id -u)
 
-VLAIDATE(){
+VALIDATE(){
     if [ $1 -ne 0 ]
     then
     echo "$2 is ....failure"
@@ -23,10 +23,10 @@ else
     echo "print you are  in superuser"
 fi         
 
-dnf install mysql -y
+dnf install mysql -y 
 
-VALIDATE $?  "INSTALLING MYSQL"
+VALIDATE $? "installing mysql"  #validate=$1 is it exit status,installing mysql=$2  #$1 is not equal to 0 means exit status is not equal to zero 
 
-dnf install git -y
+dnf install git -y 
 
-VALIDATE $?  "INSTALLING GIT"
+VALIDATE $? "installing git"
