@@ -58,7 +58,7 @@ done
 #[ ec2-user@ip-172-31-94-96 ~/sheel-script ]$ echo $?
 #0
 
-#packages is not installed
+#need to delete mysql---->dnf remove mysql -y
 
 
 #[ ec2-user@ip-172-31-94-96 ~/sheel-script ]$ sudo dnf list installed mysql
