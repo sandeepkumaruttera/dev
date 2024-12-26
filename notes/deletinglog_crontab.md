@@ -3,6 +3,10 @@ we need to write deleting.sh for deleting logs file at /tmp/app-log
 why we are using while loop
 becuase it may have infinate logs and also whatever file is there while loop must read that #while IFS= read -r line
 
+/tmp/app-log/--->log files will be presnet 
+if u want to create use below command 
+touch -d 20240101 frontend.sh
+
 
 crontab
 ---------
