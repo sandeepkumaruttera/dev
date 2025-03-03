@@ -45,7 +45,7 @@ git checkout -d <branch-name> -->delete existing branch , will go to main branch
 git reset 
 ---------
 
-git reset --soft HEAD~1 ---> it will remove commit id
+git reset --soft HEAD~1                     --->          it will remove commit id
 git reset HEAD~1 --> changes will reset from local commit and staging area 
 git reset --hard HEAD~1 --> remove the changes from commit , stagging and workspace
 
