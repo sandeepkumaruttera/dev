@@ -1,3 +1,11 @@
+terraform download process 
+---------------------------------------------
+download terraform -->download at D-drive place 
+provide the path in env variables --> if it is installed need to check at command line prompt 
+download aws cli ---> terraform will take aws cli help for authentication
+
+
+
 module development
 ------------------
 
