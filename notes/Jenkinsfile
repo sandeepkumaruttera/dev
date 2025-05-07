@@ -1,0 +1,87 @@
+pipeline {
+    agent {
+        label 'AGENT-1'
+
+    }
+    options {
+
+    }
+    environment {
+        GRETTING = 'HELLO WORLD'
+
+    }
+    parameters {
+
+    }
+    stages{
+        stage('build'){
+            steps {
+                echo 'echo this is build'
+            }
+        }
+        stage('build'){
+            steps {
+                echo 'echo this is build'
+            }
+        }
+        stage('build'){
+            steps {
+                echo 'echo this is build'
+            }
+        }            
+    }
+    post{
+        awalys{
+
+        }
+        success{
+
+        }
+        failure{
+
+        }
+    }
+}
+
+
+pipeline {
+    agent{
+       label 'AGENT-1'
+    }
+    options {
+
+    }
+    environment {
+        gretting = "hello_world"
+    }
+    parameters {
+
+    }
+    stages{
+        stage('build') {
+            steps{
+
+            }
+        }    
+        stage('test') {
+            steps{
+            }            
+        }
+        stage('deploy') {
+            steps{
+            }
+        }            
+    }
+    post{
+        awalys {
+
+        }
+        success{
+
+        }
+        failure{
+            
+        }
+
+    }
+}

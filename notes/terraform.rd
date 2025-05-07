@@ -27,3 +27,7 @@ module user -----> terraform-vpc-test --->as per requirement
 
 module development ----> terrafrom-aws-securitygroup-moduledevelopment
 module user ----------->expense-terraform-dev-module-user ---->02 security group
+
+
+
+for i in 01.vpc/ 02.securrity-group/ 03.bastion/ 05.eks/ ; do cd $i; terraform init -reconfigure;terraform apply -auto-approve; cd .. ; done
