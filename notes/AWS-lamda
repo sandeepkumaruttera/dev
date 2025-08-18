@@ -58,3 +58,108 @@ i am policy for that aws lambda
 		}
 	]
 }
+
+
+
+
+deleting s3 bucket empty using below code
+----------------------------------------------
+
+import boto3
+
+def lambda_handler(event, context):
+    s3 = boto3.client("s3")
+    deleted_buckets = []
+    skipped_buckets = []
+
+    try:
+        # List all buckets in the account
+        response = s3.list_buckets()
+        buckets = response.get("Buckets", [])
+
+        for bucket in buckets:
+            bucket_name = bucket["Name"]
+            try:
+                # Check if bucket is empty
+                objects = s3.list_objects_v2(Bucket=bucket_name, MaxKeys=1)
+                if 'Contents' not in objects:
+                    # Empty bucket — delete it
+                    s3.delete_bucket(Bucket=bucket_name)
+                    deleted_buckets.append(bucket_name)
+                else:
+                    skipped_buckets.append(bucket_name)
+            except Exception as inner_err:
+                skipped_buckets.append(f"{bucket_name} (error: {str(inner_err)})")
+
+        return {
+            "statusCode": 200,
+            "body": {
+                "deleted_buckets": deleted_buckets,
+                "skipped_buckets": skipped_buckets
+            }
+        }
+
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "body": f"Error: {str(e)}"
+        }
+
+
+-----------------------------------------------------------------------------------
+
+
+
+ If you want to sound more technical (but still clear):
+Lambda is part of AWS’s serverless computing model.
+
+It supports several languages like Python, Node.js, Java, Go, etc.
+
+It scales automatically — if 1 or 1000 users hit it, AWS handles the load.
+
+It’s commonly triggered by events, like:
+
+A new file in S3
+
+A new message in SNS or SQS
+
+An HTTP request via API Gateway
+
+You can use it for real-time processing, automation, microservices, or backends without servers.
+
+---------------------------------------
+
+
+Want to make it run automatically?
+
+Connect it to an API Gateway → run it when someone hits a URL
+
+Trigger it from S3 → when someone uploads a file
+
+Run it on a schedule → like a cron job
+
+Let me know which use case you want — I can walk you through that too.
+
+----------
+
+* Summary
+AWS Lambda = serverless function
+
+You only write the code. AWS handles the servers.
+
+You can trigger it from HTTP, file uploads, events, schedules, and more.
+
+--------------------------------------------------------
+
+
+Would you like to:
+
+Connect Lambda to a public URL using API Gateway?
+
+Trigger Lambda when a file is uploaded to S3?
+
+Run Lambda on a schedule (like every hour)?
+
+Or deploy it from your local machine using the AWS CLI?
+
+

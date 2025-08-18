@@ -1,0 +1,68 @@
+# kind: Deployment
+# apiVersion: apps/v1
+# metadata:
+#   name: nginx
+#   # these labels are deployment related labels
+#   labels:
+#     app: nginx
+#     purpose: deployment
+#     tier: web
+# spec:
+#   replicas: 20
+#   selector:
+#     matchLabels:
+#       app: nginx
+#       tier: web
+#       project: test-project
+#   # pod definition
+#   template:
+#     metadata:
+#       labels:
+#         app: nginx
+#         tier: web
+#         project: test-project
+#         extra-key: extra-value
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: nginx:latest
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+    purpose: deployment
+    tier: web
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: nginx
+      tier: web
+      project: test-project
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: web
+        project: test-project
+        extra-key: extra-value
+    spec:
+      containers:
+      - name: nginx
+#        image: nginx:1.25.4
+        image: php:8.1-apache
+      # volumeMounts:
+      # - name: logs-volume
+      #   mountPath: /usr/src/app/logs
+      # volumes:
+      # - name: logs-volume
+      #   emptyDir: {}
